@@ -1,5 +1,5 @@
 # General
-Terraform states for AWS.
+AWS learning.
 
 ## Docu
 [Terraform - official docu](https://www.terraform.io/)
