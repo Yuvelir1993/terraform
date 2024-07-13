@@ -6,6 +6,11 @@ Terraform states for AWS.
 [Terraform - Get Started - AWS](https://developer.hashicorp.com/terraform/tutorials/aws-get-started)
 [Terraform - AWS provider docu](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 
+## Project structure
+- "IAM" - set up all necessary IAM before setting up infrastructure.
+- "infrastructure" - all infrastructure states. Assumes that all necessary IAM set up is done.
+- "learning" - tutorials, tryouts, etc...
+
 ## Set credentials
 Before executing terraform commands, log in to AWS user with necessary rights to execute services actions in your Terraform code, go to "IAM -> Security credentials" and "Create access key"
 
@@ -14,7 +19,6 @@ Before executing terraform commands, log in to AWS user with necessary rights to
 export AWS_ACCESS_KEY_ID=<>
 export AWS_SECRET_ACCESS_KEY=<>
 ```
-
 
 > [!WARNING]
 > Powershell commands below will set environment variables permanently!
