@@ -9,13 +9,18 @@ Terraform states for AWS.
 ## Set credentials
 Before executing terraform commands, log in to AWS user with necessary rights to execute services actions in your Terraform code, go to "IAM -> Security credentials" and "Create access key"
 
-### Linux
+```bash
+# bash
 export AWS_ACCESS_KEY_ID=<>
 export AWS_SECRET_ACCESS_KEY=<>
+```
 
-### Powershell
-> [!WARNING]  
-> Will set environment variables permanently!
 
+> [!WARNING]
+> Powershell commands below will set environment variables permanently!
+
+```powershell
+# powershell
 [System.Environment]::SetEnvironmentVariable('AWS_ACCESS_KEY_ID','<>')
 [System.Environment]::SetEnvironmentVariable('AWS_SECRET_ACCESS_KEY','<>')
+```
