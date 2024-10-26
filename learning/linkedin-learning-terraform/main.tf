@@ -13,11 +13,6 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-variable "ami_linux_2023_free_tier" {
-  description = "value"
-  default = "ami-08ec94f928cf25a9d"
-}
-
 module "vpc_external_module" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.14.0"
@@ -28,7 +23,7 @@ module "vpc_external_module" {
 
   tags = {
     Terraform   = "true"
-    DeployedBy  = "tf-cloud"
+    DeployedBy  = var.deployed_by
     Environment = "linkedin"
   }
 }
@@ -46,26 +41,7 @@ module "security_group_external_module" {
 
   tags = {
     Terraform   = "true"
-    DeployedBy  = "tf-cloud"
-    Environment = "linkedin"
-  }
-}
-
-module "ec2_instance_external_module" {
-  source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "5.7.1"
-
-  instance_type = "t2.micro"
-  ami           = var.ami_linux_2023_free_tier
-  name          = "test-instance"
-
-  subnet_id              = module.vpc_external_module.public_subnets[0]
-  vpc_security_group_ids = [module.security_group_external_module.security_group_id]
-
-
-  tags = {
-    Terraform   = "true"
-    DeployedBy  = "tf-cloud"
+    DeployedBy  = var.deployed_by
     Environment = "linkedin"
   }
 }
@@ -99,7 +75,7 @@ module "alb_external_module" {
 
   tags = {
     Terraform   = "true"
-    DeployedBy  = "tf-cloud"
+    DeployedBy  = var.deployed_by
     Environment = "linkedin"
   }
 }
@@ -112,7 +88,7 @@ module "autoscaling_external_module" {
   min_size = 1
   max_size = 2
 
-  image_id            = "ami-08ec94f928cf25a9d"
+  image_id            = var.ami_linux_2023_free_tier
   instance_type       = "t2.micro"
   security_groups     = [module.security_group_external_module.security_group_id]
   vpc_zone_identifier = module.vpc_external_module.public_subnets
@@ -120,7 +96,7 @@ module "autoscaling_external_module" {
 
   tags = {
     Terraform   = "true"
-    DeployedBy  = "tf-cloud"
+    DeployedBy  = var.deployed_by
     Environment = "linkedin"
   }
 }
