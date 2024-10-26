@@ -64,3 +64,59 @@ module "ec2_instance_external_module" {
     Environment = "linkedin"
   }
 }
+
+module "alb_external_module" {
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 6.0"
+  name    = "test-alb"
+
+  load_balancer_type = "application"
+  security_groups    = [module.security_group_external_module.security_group_id]
+  subnets            = module.vpc_external_module.public_subnets
+  vpc_id             = module.vpc_external_module.vpc_id
+
+  target_groups = [
+    {
+      name_prefix      = "blog-"
+      backend_protocol = "HTTP"
+      backend_port     = 80
+      target_type      = "instance"
+    }
+  ]
+
+  http_tcp_listeners = [
+    {
+      port               = 80
+      protocol           = "HTTP"
+      target_group_index = 0
+    }
+  ]
+
+  tags = {
+    Terraform   = "true"
+    DeployedBy  = "tf-cloud"
+    Environment = "linkedin"
+  }
+}
+
+module "autoscaling_external_module" {
+  source  = "terraform-aws-modules/autoscaling/aws"
+  version = "6.5.2"
+  name    = "example-autoscaling"
+
+  min_size         = 1
+  max_size         = 3
+  desired_capacity = 2
+
+  image_id            = "ami-08ec94f928cf25a9d"
+  instance_type       = "t2.micro"
+  security_groups     = [module.security_group_external_module.security_group_id]
+  vpc_zone_identifier = module.vpc_external_module.public_subnets
+  target_group_arns   = module.alb_external_module.target_group_arns
+
+  tags = {
+    Terraform   = "true"
+    DeployedBy  = "tf-cloud"
+    Environment = "linkedin"
+  }
+}
