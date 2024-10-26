@@ -13,6 +13,11 @@ provider "aws" {
   region = "eu-central-1"
 }
 
+variable "ami_linux_2023_free_tier" {
+  description = "value"
+  default = "ami-08ec94f928cf25a9d"
+}
+
 module "vpc_external_module" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.14.0"
@@ -51,7 +56,7 @@ module "ec2_instance_external_module" {
   version = "5.7.1"
 
   instance_type = "t2.micro"
-  ami           = "ami-08ec94f928cf25a9d"
+  ami           = var.ami_linux_2023_free_tier
   name          = "test-instance"
 
   subnet_id              = module.vpc_external_module.public_subnets[0]
