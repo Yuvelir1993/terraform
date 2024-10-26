@@ -8,3 +8,16 @@ variable "deployed_by_terraform" {
   type        = string
   default     = "tf-cloud"
 }
+
+variable "environment" {
+  description = "Deployment environment"
+
+  type = object({
+    name           = string
+    network_prefix = string
+  })
+  default = {
+    name           = "dev"
+    network_prefix = "10.0"
+  }
+}

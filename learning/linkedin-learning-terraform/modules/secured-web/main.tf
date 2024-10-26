@@ -1,22 +1,23 @@
 module "vpc_external_module" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.14.0"
+  name    = "VPC-for-${var.environment.name}"
 
   cidr           = "10.0.0.0/16"
   azs            = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
-  public_subnets = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+  public_subnets = ["${var.environment.network_prefix}..101.0/24", "${var.environment.network_prefix}..102.0/24", "${var.environment.network_prefix}..103.0/24"]
 
   tags = {
     Terraform   = "true"
     DeployedBy  = var.deployed_by_terraform
-    Environment = "linkedin"
+    Environment = var.environment.name
   }
 }
 
 module "security_group_external_module" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.2.0"
-  name    = "test-learning-sg"
+  name    = "test-learning-sg-${var.environment.name}"
 
   vpc_id              = module.vpc_external_module.vpc_id
   ingress_rules       = ["https-443-tcp", "http-80-tcp"]
@@ -27,14 +28,14 @@ module "security_group_external_module" {
   tags = {
     Terraform   = "true"
     DeployedBy  = var.deployed_by_terraform
-    Environment = "linkedin"
+    Environment = var.environment.name
   }
 }
 
 module "alb_external_module" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 6.0"
-  name    = "test-alb"
+  name    = "test-alb-${var.environment.name}"
 
   load_balancer_type = "application"
   security_groups    = [module.security_group_external_module.security_group_id]
@@ -43,7 +44,7 @@ module "alb_external_module" {
 
   target_groups = [
     {
-      name_prefix      = "blog-"
+      name_prefix      = "${var.environment.name}-"
       backend_protocol = "HTTP"
       backend_port     = 80
       target_type      = "instance"
@@ -61,7 +62,7 @@ module "alb_external_module" {
   tags = {
     Terraform   = "true"
     DeployedBy  = var.deployed_by_terraform
-    Environment = "linkedin"
+    Environment = var.environment.name
   }
 }
 
@@ -82,6 +83,6 @@ module "autoscaling_external_module" {
   tags = {
     Terraform   = "true"
     DeployedBy  = var.deployed_by_terraform
-    Environment = "linkedin"
+    Environment = var.environment.name
   }
 }
