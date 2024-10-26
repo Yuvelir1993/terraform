@@ -23,7 +23,7 @@ module "vpc_external_module" {
 
   tags = {
     Terraform   = "true"
-    DeployedBy  = var.deployed_by
+    DeployedBy  = var.deployed_by_terraform
     Environment = "linkedin"
   }
 }
@@ -41,7 +41,7 @@ module "security_group_external_module" {
 
   tags = {
     Terraform   = "true"
-    DeployedBy  = var.deployed_by
+    DeployedBy  = var.deployed_by_terraform
     Environment = "linkedin"
   }
 }
@@ -75,7 +75,7 @@ module "alb_external_module" {
 
   tags = {
     Terraform   = "true"
-    DeployedBy  = var.deployed_by
+    DeployedBy  = var.deployed_by_terraform
     Environment = "linkedin"
   }
 }
@@ -96,7 +96,7 @@ module "autoscaling_external_module" {
 
   tags = {
     Terraform   = "true"
-    DeployedBy  = var.deployed_by
+    DeployedBy  = var.deployed_by_terraform
     Environment = "linkedin"
   }
 }
