@@ -104,9 +104,8 @@ module "autoscaling_external_module" {
   version = "6.5.2"
   name    = "example-autoscaling"
 
-  min_size         = 1
-  max_size         = 3
-  desired_capacity = 2
+  min_size = 1
+  max_size = 2
 
   image_id            = "ami-08ec94f928cf25a9d"
   instance_type       = "t2.micro"
