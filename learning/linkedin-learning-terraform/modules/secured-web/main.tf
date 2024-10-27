@@ -69,7 +69,7 @@ module "alb_external_module" {
 module "autoscaling_external_module" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "6.5.2"
-  name    = "example-autoscaling"
+  name    = "example-autoscaling-${var.environment.name}"
 
   min_size = 1
   max_size = 2
