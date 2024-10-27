@@ -5,7 +5,7 @@ module "vpc_external_module" {
 
   cidr           = "10.0.0.0/16"
   azs            = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
-  public_subnets = ["${var.environment.network_prefix}..101.0/24", "${var.environment.network_prefix}..102.0/24", "${var.environment.network_prefix}..103.0/24"]
+  public_subnets = ["${var.environment.network_prefix}.101.0/24", "${var.environment.network_prefix}.102.0/24", "${var.environment.network_prefix}.103.0/24"]
 
   tags = {
     Terraform   = "true"
