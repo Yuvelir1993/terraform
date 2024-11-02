@@ -1,14 +1,3 @@
-variable "tags_default" {
-  type = object({
-    Environment = string
-    ManagedBy   = string
-  })
-  description = "Default tags for the whole VPC proejct."
-  default = {
-    Environment = "Learning"
-    ManagedBy   = "LocalTerraformCLI"
-  }
-}
 
 variable "availability_zones_eu_central_1" {
   type        = list(string)
@@ -23,6 +12,18 @@ variable "environment" {
   validation {
     condition     = contains(["dev", "qa", "prod"], var.environment)
     error_message = "The environment must be one of: dev, qa, or prod."
+  }
+}
+
+variable "tags_default" {
+  type = object({
+    Environment = string
+    ManagedBy   = string
+  })
+  description = "Default tags for the whole VPC proejct."
+  default = {
+    Environment = var.environment
+    ManagedBy   = "LocalTerraformCLI"
   }
 }
 
