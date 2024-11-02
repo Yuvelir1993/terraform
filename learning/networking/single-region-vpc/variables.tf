@@ -30,16 +30,16 @@ variable "env_cidr_map" {
   description = "Map of environment names to CIDR block second octet"
   type        = map(string)
   default = {
-    "dev"  = "0"
-    "qa"   = "10"
-    "prod" = "20"
+    "dev"  = "10.0.0.0/16"
+    "qa"   = "10.10.0.0/16"
+    "prod" = "10.20.0.0/16"
   }
 }
 
 variable "vpc_cidr" {
   type        = string
   description = "VPC CIDR."
-  default     = "10.${lookup(var.env_cidr_map, var.environment, "0")}.0.0/16"
+  default     = lookup(var.env_cidr_map, var.environment, "10.0.0.0/16")
 }
 
 variable "public_subnet_cidrs" {
