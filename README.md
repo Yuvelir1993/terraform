@@ -5,6 +5,7 @@ Terraform states for AWS.
 [Terraform - official docu](https://www.terraform.io/)
 [Terraform - Get Started - AWS](https://developer.hashicorp.com/terraform/tutorials/aws-get-started)
 [Terraform - AWS provider docu](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+[Brainboard - visualize](https://app.brainboard.co/)
 
 ## Project structure
 - "IAM" - set up all necessary IAM before setting up infrastructure.
