@@ -10,20 +10,46 @@ variable "tags_default" {
   }
 }
 
+variable "availability_zones_eu_central_1" {
+  type        = list(string)
+  description = "List of 'eu-central-1' Europe (Frankfurt) availability zones."
+  default     = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
+}
+
+variable "environment" {
+  description = "The deployment environment (e.g., dev, qa, prod)"
+  type        = string
+
+  validation {
+    condition     = contains(["dev", "qa", "prod"], var.environment)
+    error_message = "The environment must be one of: dev, qa, or prod."
+  }
+}
+
+variable "env_cidr_map" {
+  description = "Map of environment names to CIDR block second octet"
+  type        = map(string)
+  default = {
+    "dev"  = "0"
+    "qa"   = "10"
+    "prod" = "20"
+  }
+}
+
+variable "vpc_cidr" {
+  type        = string
+  description = "VPC CIDR."
+  default     = "10.${lookup(var.env_cidr_map, var.environment, "0")}.0.0/16"
+}
+
 variable "public_subnet_cidrs" {
   type        = list(string)
-  description = "Public Subnet CIDR values"
+  description = "Public Subnet CIDR values."
   default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 }
 
 variable "private_subnet_cidrs" {
   type        = list(string)
-  description = "Private Subnet CIDR values"
+  description = "Private Subnet CIDR values."
   default     = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
-}
-
-variable "availability_zones_eu_central_1" {
-  type        = list(string)
-  description = "List of 'eu-central-1' availability zones."
-  default     = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
 }
